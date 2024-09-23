@@ -7,6 +7,15 @@ type Description struct {
 	aliases []string
 }
 
+func NewDescription(name string, aliases ...string) *Description {
+	description := new(Description)
+
+	description.name = name
+	description.aliases = aliases
+
+	return description
+}
+
 func (d *Description) Name() string {
 	return d.name
 }

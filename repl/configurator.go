@@ -21,10 +21,10 @@ func (config *ReplConfiurator) Build() *Repl {
 	repl := new(Repl)
 
 	for _, cmd := range config.commands {
-		repl.commands[cmd.Name()] = cmd.EvaluateFunction()
+		repl.commands[cmd.Name()] = cmd
 
 		for _, alias := range cmd.Aliases() {
-			repl.commands[alias] = cmd.EvaluateFunction()
+			repl.commands[alias] = cmd
 		}
 	}
 

@@ -9,7 +9,7 @@ import (
 )
 
 type Repl struct {
-	commands map[string]commands.Function
+	commands map[string]commands.Command
 }
 
 func (repl *Repl) Begin(reader io.Reader, writer io.Writer) {
@@ -38,4 +38,14 @@ func eval(cmdName string, args ...string) (result commands.Result) {
 
 func print(writer io.Writer, output string) {
 	fmt.Fprint(writer, output)
+}
+
+func (repl *Repl) Descriptions() []*commands.Description {
+	descriptions := make([]*commands.Description, 0)
+
+	for _, cmd := range repl.commands {
+		descriptions = append(descriptions, cmd.Description())
+	}
+
+	return descriptions
 }

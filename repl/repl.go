@@ -12,7 +12,7 @@ type Repl struct {
 	commands map[string]func() commands.Result
 }
 
-func (repl *Repl) Begin(reader io.Reader, writer io.Writer) *error {
+func (repl *Repl) Begin(reader io.Reader, writer io.Writer) {
 	for {
 		input := read(reader)
 
@@ -22,7 +22,7 @@ func (repl *Repl) Begin(reader io.Reader, writer io.Writer) *error {
 		print(writer, result.Message())
 
 		if result.IsTerminate() {
-			return nil
+			return
 		}
 	}
 }

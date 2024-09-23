@@ -9,7 +9,7 @@ import (
 )
 
 type Repl struct {
-	commands map[string]func() commands.Result
+	commands map[string]commands.Function
 }
 
 func (repl *Repl) Begin(reader io.Reader, writer io.Writer) {

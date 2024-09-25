@@ -1,6 +1,7 @@
 package repl_test
 
 import (
+	"bytes"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -24,6 +25,17 @@ func TestCreatingNotEmptyRepl(t *testing.T) {
 	commands := repl.Descriptions()
 	assert.NotNil(t, commands)
 	assert.NotEmpty(t, commands)
+}
+
+func TestRunReplWithExitCommand(t *testing.T) {
+	repl := MakeRepl(t, &internal.SampleExit{})
+
+	output := new(bytes.Buffer)
+	input := bytes.NewBufferString(internal.ExitCommandName + "\n")
+	repl.Begin(input, output)
+
+	assert.NotEmpty(t, output)
+	assert.Equal(t, internal.ExitResultText, output.String())
 }
 
 func MakeRepl(t *testing.T, commands ...commands.Command) *repl.Repl {

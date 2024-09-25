@@ -16,7 +16,7 @@ func (repl *Repl) Begin(reader io.Reader, writer io.Writer) {
 	for {
 		input := read(reader)
 
-		tokens := strings.Split(input, "")
+		tokens := strings.Split(input, " ")
 		if cmd, ok := repl.commands[tokens[0]]; ok {
 			result := cmd.EvaluateFunction().WithArgs(tokens[1:]...).Execute()
 

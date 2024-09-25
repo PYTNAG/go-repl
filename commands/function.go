@@ -1,6 +1,6 @@
 package commands
 
 type Function interface {
-	WithArgs(...string)
+	WithArgs(...string) Function
 	Execute() Result
 }

@@ -17,12 +17,16 @@ func (repl *Repl) Begin(reader io.Reader, writer io.Writer) {
 		input := read(reader)
 
 		tokens := strings.Split(input, "")
-		result := eval(tokens[0], tokens[1:]...)
+		if cmd, ok := repl.commands[tokens[0]]; ok {
+			result := cmd.EvaluateFunction().WithArgs(tokens[1:]...).Execute()
 
-		print(writer, result.Message())
+			print(writer, result.Message())
 
-		if result.IsTerminate() {
-			return
+			if result.IsTerminate() {
+				return
+			}
+		} else {
+			print(writer, "Unknown command")
 		}
 	}
 }
@@ -30,10 +34,6 @@ func (repl *Repl) Begin(reader io.Reader, writer io.Writer) {
 func read(reader io.Reader) (input string) {
 	fmt.Fscanln(reader, &input)
 	return
-}
-
-func eval(cmdName string, args ...string) (result commands.Result) {
-	return nil
 }
 
 func print(writer io.Writer, output string) {

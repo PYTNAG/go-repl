@@ -6,26 +6,9 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/pytnag/go-repl/commands"
+	"github.com/pytnag/go-repl/internal"
 	"github.com/pytnag/go-repl/repl"
 )
-
-type SampleCommand struct{}
-
-func (cmd *SampleCommand) Name() string {
-	return "sample"
-}
-
-func (cmd *SampleCommand) Aliases() []string {
-	return nil
-}
-
-func (cmd *SampleCommand) EvaluateFunction() commands.Function {
-	return nil
-}
-
-func (cmd *SampleCommand) Description() *commands.Description {
-	return commands.NewDescription(cmd.Name(), cmd.Aliases()...)
-}
 
 func TestCreatingEmptyRepl(t *testing.T) {
 	repl := MakeRepl(t)
@@ -36,7 +19,7 @@ func TestCreatingEmptyRepl(t *testing.T) {
 }
 
 func TestCreatingNotEmptyRepl(t *testing.T) {
-	repl := MakeRepl(t, &SampleCommand{})
+	repl := MakeRepl(t, &internal.SampleCommand{})
 
 	commands := repl.Descriptions()
 	assert.NotNil(t, commands)
